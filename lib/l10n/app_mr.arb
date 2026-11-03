@@ -1,0 +1,18 @@
+{
+  "@@locale": "mr",
+  "appTitle": "ग्रामसक्षम",
+  "home": "मुख्यपृष्ठ",
+  "registerComplaint": "समस्या नोंदवा",
+  "speakYourProblem": "तुमची समस्या सांगा",
+  "selectLanguage": "भाषा निवडा",
+  "waterProblem": "पाणी समस्या",
+  "electricityProblem": "वीज समस्या",
+  "roadProblem": "रस्ता समस्या",
+  "cleanliness": "स्वच्छता",
+  "documents": "दस्तऐवज",
+  "education": "अभ्यासिका",
+  "security": "CCTV / सुरक्षा",
+  "farming": "शेती",
+  "select": "निवडा",
+  "back": "मागे जा"
+}

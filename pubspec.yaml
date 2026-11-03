@@ -1,0 +1,40 @@
+
+name: gramsaksham_app
+description: "GramSaksham Smart Village Intelligence Platform"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.6
+  image_picker: ^1.2.0
+  speech_to_text: ^7.5.0
+  geolocator: ^14.1.1
+  geocoding: ^5.0.0
+  http: ^1.6.0
+  flutter_map: ^8.3.2
+  latlong2: ^0.9.1
+  video_player: ^2.10.0
+  flutter_local_notifications: ^22.3.2
+  google_maps_flutter: ^2.19.0
+  file_picker: ^13.3.0
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/complaints/
+    - assets/images/login_background.png
+    - assets/images/village_background.jpeg

@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "appTitle": "GramSaksham",
+  "home": "Home",
+  "registerComplaint": "Register Complaint",
+  "speakYourProblem": "Speak Your Problem",
+  "selectLanguage": "Select Language",
+  "waterProblem": "Water Problem",
+  "electricityProblem": "Electricity Problem",
+  "roadProblem": "Road Problem",
+  "cleanliness": "Cleanliness",
+  "documents": "Documents",
+  "education": "Study Centre",
+  "security": "CCTV / Security",
+  "farming": "Farming",
+  "select": "Select",
+  "back": "Back"
+}
