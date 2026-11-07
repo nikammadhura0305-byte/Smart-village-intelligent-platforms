@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Village Intelligence | Officer Desk</title>
+  <link rel="stylesheet" href="style.css?v=18">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <main id="login-view" class="login-shell">
+    <section class="login-card">
+      <div class="brand-mark">SV</div>
+      <p class="eyebrow government-eyebrow" data-i18n="brandSubtitle">Government Service Command Center</p>
+      <h1 data-i18n="brandTitle">Officer Desk</h1>
+      <p class="muted" data-i18n="brandTagline">Monitor civic service delivery, resolve village issues, and coordinate departments with transparency.</p>
+
+      <form id="login-form" aria-label="Officer sign-in form">
+        <label for="login-lang-select" data-i18n="selectLanguage">Language / भाषा</label>
+        <select id="login-lang-select" class="lang-select">
+          <option value="en">English</option>
+          <option value="mr">मराठी (Marathi)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+        </select>
+
+        <label for="email" data-i18n="emailLabel">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="username" value="officer@example.com" required aria-label="Officer email">
+
+        <label for="password" data-i18n="passwordLabel">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" value="change-this-password" required aria-label="Officer password">
+
+        <button type="submit" class="primary-button" aria-label="Sign in to officer dashboard" data-i18n="signInBtn">Sign in as Officer</button>
+        <p id="login-error" class="error" role="alert" aria-live="assertive"></p>
+      </form>
+
+      <button id="show-officer-registration" class="secondary-button" type="button" style="width:100%;margin-top:12px;">Register as officer</button>
+      <form id="officer-registration-form" class="hidden" aria-label="Officer registration form">
+        <h2>Officer registration</h2>
+        <p class="muted">Choose your district, then select your village. Your account requires administrator approval.</p>
+        <label for="register-officer-name">Full name</label>
+        <input id="register-officer-name" autocomplete="name" required minlength="2" maxlength="150">
+        <label for="register-officer-email">Email address</label>
+        <input id="register-officer-email" type="email" autocomplete="email" required>
+        <label for="register-officer-password">Password</label>
+        <input id="register-officer-password" type="password" autocomplete="new-password" required minlength="8">
+        <label for="register-officer-district" data-i18n="districtLabel">District</label>
+        <select id="register-officer-district" required>
+          <option value="">Select district</option>
+        </select>
+        <label for="register-officer-taluka" data-i18n="talukaLabel">Taluka</label>
+        <select id="register-officer-taluka" required disabled>
+          <option value="">Select a district first</option>
+        </select>
+        <label for="register-officer-village" data-i18n="villageLabel">Village</label>
+        <select id="register-officer-village" required disabled>
+          <option value="">Select a taluka first</option>
+        </select>
+        <button id="submit-officer-registration" type="submit" class="primary-button">Submit registration</button>
+        <p id="officer-registration-message" role="status" aria-live="polite"></p>
+        <button id="show-officer-login" class="secondary-button" type="button">Back to sign in</button>
+      </form>
+    </section>
+  </main>
+
+
+  <main id="app-view" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-mark small">SV</span>
+        <span data-i18n="brandTitle">Officer Desk</span>
+      </div>
+      <nav id="sidebar-nav">
+        <a href="#overview" class="nav-link active" data-page="overview">
+          <span data-i18n="navOverview">Overview</span>
+        </a>
+        <a href="#complaints" class="nav-link" data-page="complaints">
+          <span data-i18n="navComplaints">Complaints</span>
+        </a>
+        <a href="#analytics" class="nav-link" data-page="analytics">
+          <span data-i18n="navAnalytics">Data Analytics</span>
+        </a>
+        <a href="#map" class="nav-link" data-page="map">
+          <span data-i18n="navMap">Village Map & Services</span>
+        </a>
+        <a href="#reports" class="nav-link" data-page="reports">
+          <span data-i18n="navReports">Reports</span>
+        </a>
+        <a href="#settings" class="nav-link" data-page="settings">
+          <span data-i18n="navSettings">Settings & Profile</span>
+        </a>
+      </nav>
+      <button id="logout-button" class="ghost-button" type="button" aria-label="Sign out of officer dashboard" data-i18n="signOut">Sign out</button>
+    </aside>
+
+    <section class="content">
+      <header class="topbar">
+        <div>
+          <nav class="breadcrumbs" aria-label="Page navigation trail">
+            <span class="breadcrumb-item" data-i18n="breadcrumbHome">Home</span>
+            <span class="breadcrumb-sep">/</span>
+            <span id="breadcrumb-current" class="breadcrumb-current" data-i18n="navOverview">Overview</span>
+          </nav>
+          <h1 id="topbar-page-title" data-i18n="villageOverview">Village overview</h1>
+        </div>
+        <div class="topbar-actions">
+          <label class="village-scope-control">
+            <span data-i18n="districtLabel">District</span>
+            <select id="district-select" aria-label="Select district"></select>
+          </label>
+          <label class="village-scope-control">
+            <span data-i18n="talukaLabel">Taluka</span>
+            <select id="taluka-select" aria-label="Select taluka"></select>
+          </label>
+          <label class="village-scope-control">
+            <span data-i18n="villageLabel">Village</span>
+            <select id="village-select" aria-label="Select village"></select>
+          </label>
+          <select id="topbar-lang-select" class="lang-select" aria-label="Select interface language">
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+            <option value="hi">हिन्दी</option>
+          </select>
+          <button id="retry-button" class="secondary-button hidden" type="button" aria-label="Retry loading dashboard data" data-i18n="retry">Retry</button>
+          <div id="connection-status" class="status-pill" aria-live="polite" aria-atomic="true">Connected</div>
+          <div id="topbar-officer-chip" class="officer-chip" title="Active officer account">
+            <span class="chip-avatar">VO</span>
+            <span id="chip-officer-name" class="chip-name">Village Officer</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page 1: Overview -->
+      <div id="page-overview" class="dashboard-page active">
+        <section id="overview" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="situationReport">Situation report</p>
+              <h2 data-i18n="villageOverview">Village overview</h2>
+            </div>
+            <div class="dashboard-refresh-meta">
+              <span id="dashboard-updated-at" class="muted" role="status" aria-live="polite" data-i18n="autoRefreshNote">Updates automatically every 30 seconds</span>
+              <button id="refresh-button" class="secondary-button" type="button" aria-label="Refresh complaint overview data" data-i18n="refreshData">Refresh data</button>
+            </div>
+          </div>
+
+          <div class="operations-banner">
+            <div>
+              <p class="eyebrow government-eyebrow">Official operations desk</p>
+              <h3>Gram Panchayat Service Command Center</h3>
+            </div>
+            <div class="operations-badges">
+              <span class="gov-pill success">Live complaint register</span>
+              <span class="gov-pill neutral">Citizen-submitted records</span>
+            </div>
+          </div>
+
+          <div id="metric-grid" class="metric-grid"></div>
+
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="byCategory">Complaints by category</h3>
+                <span class="panel-note" data-i18n="liveRecords">Live records</span>
+              </div>
+              <div id="overview-category-chart" class="bar-chart"></div>
+            </article>
+
+            <article class="panel urgent-panel">
+              <div class="panel-heading">
+                <h3 data-i18n="officerFocus">Officer focus</h3>
+                <span class="panel-note" data-i18n="prioritized">Prioritized</span>
+              </div>
+              <div id="focus-list" class="focus-list"></div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Page 2: Complaint Management & Work Orders -->
+      <div id="page-complaints" class="dashboard-page">
+        <section id="complaints" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="caseQueue">Case queue</p>
+              <h2 data-i18n="complaintManagement">Complaint management</h2>
+            </div>
+          </div>
+
+          <div id="complaint-alert" class="alert-banner hidden" role="alert"></div>
+
+          <div class="filters panel">
+            <label>
+              <span data-i18n="thComplaint">Search</span>
+              <input id="search-filter" placeholder="Search text, ID, or location..." data-i18n-placeholder="searchPlaceholder">
+            </label>
+            <label>
+              <span data-i18n="thCategory">Category</span>
+              <select id="category-filter"><option value="" data-i18n="allCategories">All categories</option></select>
+            </label>
+            <label>
+              <span data-i18n="thStatus">Status</span>
+              <select id="status-filter">
+                <option value="" data-i18n="allStatuses">All statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Assigned">Assigned</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+                <option value="Closed">Closed</option>
+                <option value="Reopened">Reopened</option>
+                <option value="Escalated">Escalated</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="thPriority">Priority</span>
+              <select id="priority-filter">
+                <option value="" data-i18n="allPriorities">All priorities</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="thSeverity">Severity</span>
+              <select id="severity-filter">
+                <option value="" data-i18n="allSeverities">All severities</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="thDepartment">Department</span>
+              <select id="department-filter">
+                <option value="" data-i18n="allDepartments">All departments</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="dateFrom">From Date</span>
+              <input type="date" id="complaint-start-date">
+            </label>
+            <label>
+              <span data-i18n="dateTo">To Date</span>
+              <input type="date" id="complaint-end-date">
+            </label>
+            <label>
+              <span data-i18n="sortLabel">Sort by</span>
+              <select id="complaint-sort">
+                <option value="created_desc" data-i18n="sortCreatedDesc">Newest first</option>
+                <option value="created_asc" data-i18n="sortCreatedAsc">Oldest first</option>
+                <option value="priority_desc" data-i18n="sortPriorityDesc">Highest priority</option>
+                <option value="priority_asc" data-i18n="sortPriorityAsc">Lowest priority</option>
+                <option value="id_desc" data-i18n="sortIdDesc">ID (High to Low)</option>
+                <option value="id_asc" data-i18n="sortIdAsc">ID (Low to High)</option>
+              </select>
+            </label>
+            <div class="filters-btn-group">
+              <button id="filter-button" class="primary-button" type="button" aria-label="Apply complaint filters" data-i18n="applyFilters">Apply</button>
+              <button id="reset-complaint-filters" class="secondary-button" type="button" data-i18n="resetFiltersBtn">Reset</button>
+            </div>
+          </div>
+
+          <div class="panel table-panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-i18n="thComplaint">Complaint</th>
+                    <th data-i18n="thVillage">Village</th>
+                    <th data-i18n="thCategory">Category</th>
+                    <th data-i18n="thSeverity">Severity</th>
+                    <th data-i18n="thPriority">Priority</th>
+                    <th data-i18n="thStatus">Status</th>
+                    <th data-i18n="thDepartment">Department</th>
+                    <th data-i18n="thCreatedDate">Created Date</th>
+                    <th data-i18n="thAction">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="complaint-table"></tbody>
+              </table>
+            </div>
+            <p id="empty-state" class="empty-state hidden" data-i18n="noMatchingComplaints">No complaints match these filters.</p>
+            <div class="pagination-bar">
+              <div id="pagination-info" class="pagination-info">Showing 0 complaints</div>
+              <div class="pagination-controls">
+                <label class="rows-per-page-label">
+                  <span data-i18n="rowsPerPage">Rows:</span>
+                  <select id="rows-per-page">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                  </select>
+                </label>
+                <button id="prev-page-btn" class="secondary-button" type="button" data-i18n="prevBtn">Previous</button>
+                <span id="page-indicator" class="page-indicator">Page 1</span>
+                <button id="next-page-btn" class="secondary-button" type="button" data-i18n="nextBtn">Next</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="assignments" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="operations">Operations</p>
+              <h2 data-i18n="departmentAssignments">Department assignments & Work orders</h2>
+            </div>
+          </div>
+
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading"><h3 data-i18n="openAssignmentQueue">Open assignment queue</h3></div>
+              <div id="assignment-summary" class="focus-list">
+                <p class="muted" data-i18n="assignmentHint">Use the complaint detail panel to assign departments and officers.</p>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-heading"><h3 data-i18n="departmentsInAction">Departments in action</h3></div>
+              <div id="assignment-departments" class="resource-grid"></div>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <!-- Page 3: Data Analytics & Visualization (B.Tech Data Science Core) -->
+      <div id="page-analytics" class="dashboard-page">
+        <section id="insights" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="decisionSupport">Decision support & Intelligence</p>
+              <h2 data-i18n="villageAnalyticsTitle">Village Intelligence & Analytics</h2>
+            </div>
+          </div>
+
+          <!-- Interactive Analytics Filter Toolbar -->
+          <div class="analytics-toolbar panel">
+            <div class="filter-group">
+              <label>
+                <span data-i18n="startDateLabel">Start Date</span>
+                <input type="date" id="analytics-start-date">
+              </label>
+              <label>
+                <span data-i18n="endDateLabel">End Date</span>
+                <input type="date" id="analytics-end-date">
+              </label>
+              <label>
+                <span data-i18n="thCategory">Category</span>
+                <select id="analytics-cat-filter">
+                  <option value="" data-i18n="allCategories">All categories</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="thStatus">Status</span>
+                <select id="analytics-status-filter">
+                  <option value="" data-i18n="allStatuses">All statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Assigned">Assigned</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Resolved">Resolved</option>
+                  <option value="Closed">Closed</option>
+                  <option value="Reopened">Reopened</option>
+                  <option value="Escalated">Escalated</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="thDepartment">Department</span>
+                <select id="analytics-dept-filter">
+                  <option value="" data-i18n="allDepartments">All departments</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="areaLabel">Area / Ward</span>
+                <select id="analytics-area-filter">
+                  <option value="" data-i18n="allAreas">All Areas / Wards</option>
+                </select>
+              </label>
+              <button id="reset-analytics-filters" class="secondary-button" type="button" data-i18n="resetFiltersBtn">Reset Filters</button>
+            </div>
+          </div>
+
+          <!-- KPI Summary Cards -->
+          <div class="metric-grid" style="margin-bottom: 1.5rem;">
+            <article class="metric">
+              <div class="metric-label" data-i18n="totalComplaints">Total complaints</div>
+              <div id="analytics-kpi-total" class="metric-value">0</div>
+            </article>
+            <article class="metric">
+              <div class="metric-label" data-i18n="pendingComplaints">Pending</div>
+              <div id="analytics-kpi-pending" class="metric-value">0</div>
+            </article>
+            <article class="metric">
+              <div class="metric-label" data-i18n="inProgressComplaints">In progress</div>
+              <div id="analytics-kpi-inprogress" class="metric-value">0</div>
+            </article>
+            <article class="metric">
+              <div class="metric-label" data-i18n="resolvedComplaints">Resolved</div>
+              <div id="analytics-kpi-resolved" class="metric-value">0</div>
+            </article>
+            <article class="metric critical">
+              <div class="metric-label" data-i18n="criticalComplaints">Critical</div>
+              <div id="analytics-kpi-critical" class="metric-value">0</div>
+            </article>
+            <article class="metric">
+              <div class="metric-label" data-i18n="resolutionRate">Resolution rate</div>
+              <div id="analytics-kpi-rate" class="metric-value">0%</div>
+            </article>
+          </div>
+
+          <!-- Row 1: Category Bar Chart & Status Donut Chart -->
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="chartCategoryTitle">Complaints by Category (Bar Chart)</h3>
+                <span class="panel-note" data-i18n="liveRecords">Live Records</span>
+              </div>
+              <p class="chart-explanation" data-i18n="chartCategoryExplanation">Counts of reports grouped by assigned category. The vertical axis is the number of complaints.</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-category" aria-label="Complaint counts by category"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="chartStatusTitle">Status Distribution (Donut Chart)</h3>
+                <span class="panel-note">Proportions</span>
+              </div>
+              <p class="chart-explanation" data-i18n="chartStatusExplanation">Shows how many complaints are in each workflow status. Hover a segment to see its count and share.</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-status" aria-label="Complaint counts and percentages by status"></canvas>
+              </div>
+            </article>
+          </div>
+
+          <!-- Row 2: Trend Timeline & Area Bubble Chart -->
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="chartTrendTitle">Complaint Trends Timeline (Line Chart)</h3>
+                <div class="interval-toggle">
+                  <button id="btn-interval-day" class="interval-btn active" type="button" data-interval="day" data-i18n="intervalDay">Day</button>
+                  <button id="btn-interval-week" class="interval-btn" type="button" data-interval="week" data-i18n="intervalWeek">Week</button>
+                  <button id="btn-interval-month" class="interval-btn" type="button" data-interval="month" data-i18n="intervalMonth">Month</button>
+                </div>
+              </div>
+              <p class="chart-explanation" data-i18n="chartTrendExplanation">Reports are grouped by their submission date. Choose day, week, or month to change the time interval.</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-trend" aria-label="Complaint submissions over time"></canvas>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 id="bubble-chart-heading" data-i18n="chartBubbleTitle">Category Comparison (Bubble Chart)</h3>
+                <div class="interval-toggle" style="margin-left: auto;">
+                  <button id="btn-bubble-cat" class="interval-btn active" type="button" data-bubble-mode="category" data-i18n="bubbleCategories">By Category</button>
+                  <button id="btn-bubble-area" class="interval-btn" type="button" data-bubble-mode="area" data-i18n="bubbleAreas">By Area</button>
+                </div>
+              </div>
+              <p id="bubble-legend-note" class="panel-note" style="margin: 0 0 8px 0; font-size: 11px;" data-i18n="bubbleCategoryExplanation">X: Total Complaints · Y: Unresolved · Size: Avg Severity</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-bubble"></canvas>
+              </div>
+            </article>
+          </div>
+
+          <!-- Row 3: Resolution Turnaround Distribution (Histogram) & Department Workload -->
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="resolutionHistogramTitle">Resolution Time Distribution (Histogram)</h3>
+                <span class="panel-note" data-i18n="resolvedOnlyNote">Resolved Cases Only</span>
+              </div>
+              <p class="chart-explanation" data-i18n="chartResolutionExplanation">Each bar counts resolved complaints by elapsed time from report creation to completion.</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-resolution-histogram" aria-label="Resolved complaint counts by time to resolution"></canvas>
+              </div>
+              <p id="resolution-histogram-empty" class="empty-state hidden" data-i18n="noResolvedTimeData">No resolved complaints with valid completion timestamps yet.</p>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="deptWorkloadTitle">Department Workload Breakdown</h3>
+                <span class="panel-note">Work Orders</span>
+              </div>
+              <p class="chart-explanation" data-i18n="chartDepartmentExplanation">Counts of complaints currently associated with each assigned department, including unassigned cases.</p>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-dept-workload" aria-label="Complaint workload by department"></canvas>
+              </div>
+            </article>
+          </div>
+
+          <!-- Row 4: Problem Density Heatmap & Resolution Turnaround / Frequent Problems -->
+          <div class="overview-grid">
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="heatmapTitle">Geographic Problem Density Heatmap</h3>
+                <span class="panel-note" data-i18n="heatmapLegend">Severity Weighted</span>
+              </div>
+              <p class="chart-explanation" data-i18n="chartHeatmapExplanation">Shows complaint locations with valid GPS coordinates. Higher severity reports contribute more weight to the visible density.</p>
+              <div id="analytics-heatmap" style="height: 330px; border-radius: 8px; border: 1px solid #d5e2dc; background: #eaf3ed;"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="resolutionAnalyticsTitle">Resolution Turnaround & Recurring Hotspots</h3>
+                <span class="panel-note">Performance Analytics</span>
+              </div>
+              <div id="resolution-summary-box" class="summary-box" style="margin-bottom: 12px;"></div>
+              <h4 style="margin: 10px 0 6px 0; font-size: 13px; font-weight: 600;" data-i18n="frequentIssuesTitle">Frequently Repeated Problems</h4>
+              <div id="frequent-issues-table-container" class="table-wrap"></div>
+            </article>
+          </div>
+
+          <!-- AI Insights & Predictive Safeguard Cards -->
+          <article class="panel" style="margin-top: 1.25rem;">
+            <div class="panel-heading"><h3 data-i18n="aiInsightsCard">AI-assisted classification and priority insights</h3></div>
+            <div id="ai-insights" class="focus-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <h3 data-i18n="predictiveIntelligence">Predictive Intelligence: Repeated Issue Hotspots</h3>
+              <span id="prediction-status-pill" class="panel-note" data-i18n="safeguardActive">Safeguard Active</span>
+            </div>
+            <div id="predictions-content" class="focus-list"></div>
+          </article>
+        </section>
+      </div>
+
+      <!-- Page 4: Village Map & 9-Domain Services Digital Twin -->
+      <div id="page-map" class="dashboard-page">
+        <!-- Return to Complaint Details navigation bar -->
+        <div id="map-return-bar" class="map-return-bar hidden">
+          <button id="return-to-complaint-btn" class="secondary-button" type="button" style="display:inline-flex; align-items:center; gap:8px;">
+            <span id="return-complaint-btn-text">← Back to Complaint Details</span>
+          </button>
+          <span id="map-return-info" class="muted" style="font-size: 13px;"></span>
+        </div>
+
+        <section id="digital-twin" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="dataDrivenView">Data-driven village view</p>
+              <h2 data-i18n="digitalTwinTitle">Village digital twin</h2>
+            </div>
+          </div>
+
+          <div class="overview-grid">
+            <article class="panel">
+              <div id="village-summary"></div>
+              <div id="resource-grid" class="resource-grid"></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-heading">
+                <h3 data-i18n="complaintLocations">Complaint locations</h3>
+                <span class="panel-note" data-i18n="mapServiceOptional">Map service optional</span>
+              </div>
+
+              <!-- Map visualization -->
+              <p id="map-selection-message" class="map-selection-message muted" role="status" aria-live="polite" data-i18n="selectComplaintOnMap">Select a complaint below to zoom to its map location.</p>
+              <div id="complaint-map" class="complaint-map" aria-label="Complaint coordinate visualization"></div>
+              <div id="boundary-alerts" class="map-list"></div>
+              <div id="map-points" class="map-list"></div>
+            </article>
+          </div>
+
+          <!-- 9-Domain Village Infrastructure Digital Twin Asset Registry -->
+          <article class="panel" style="margin-top: 1.5rem;">
+            <div class="panel-heading">
+              <h3 data-i18n="assetRegistryTitle">9-Domain Village Infrastructure Registry</h3>
+              <span class="panel-note">SRS Module 6</span>
+            </div>
+            <div id="asset-registry-container" class="table-wrap"></div>
+          </article>
+        </section>
+      </div>
+
+      <!-- Page 5: Reports & SLA Governance -->
+      <div id="page-reports" class="dashboard-page">
+        <section id="reports-section" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="officialRecordsEyebrow">Official administrative records</p>
+              <h2 data-i18n="reportsPageTitle">Village Governance Reports & Exports</h2>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button id="run-escalation-button" class="primary-button" type="button" aria-label="Trigger overdue SLA escalation check" data-i18n="runEscalationBtn">Run SLA Escalation Check</button>
+              <button id="view-report-button" class="secondary-button" type="button" aria-label="Generate governance report" data-i18n="governanceSummaryBtn">Governance Summary</button>
+              <button id="export-complaints-csv-btn" class="secondary-button" type="button" data-i18n="exportComplaintsCsv">Export Complaints CSV</button>
+              <button id="export-gov-csv-btn" class="secondary-button" type="button" data-i18n="exportGovCsv">Export Governance CSV</button>
+              <button id="print-report-btn" class="secondary-button" type="button" data-i18n="printOfficialReport">Print Official Report</button>
+            </div>
+          </div>
+
+          <div id="escalation-alert" class="panel hidden" style="margin-bottom: 1rem; border-left: 4px solid #0d9488;"></div>
+          <div id="report-view" class="panel" style="margin-bottom: 1rem;">
+            <div class="panel-heading">
+              <h3 data-i18n="govReportTitle">Village Governance Summary Report</h3>
+              <button id="close-report-button" class="ghost-button" type="button" style="padding: 2px 8px;" data-i18n="closeBtn">✕ Close</button>
+            </div>
+            <div id="report-content" class="detail-grid"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Page 6: Settings & Officer Profile -->
+      <div id="page-settings" class="dashboard-page">
+        <section id="profile" class="section-block">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="accountTitle">Account</p>
+              <h2 data-i18n="accountTitle">Profile and settings</h2>
+            </div>
+          </div>
+
+          <article class="panel profile-panel">
+            <div class="profile-row">
+              <div>
+                <p class="muted" data-i18n="signedInAs">Signed in as</p>
+                <strong id="officer-display-name">Village officer</strong>
+                <p class="muted" id="officer-display-email">officer@example.com</p>
+              </div>
+              <button id="logout-button-profile" class="ghost-button" type="button" aria-label="Sign out of officer dashboard" data-i18n="signOut">Log out</button>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);">
+              <label for="settings-lang-select" style="font-weight: 600; margin-bottom: 0.5rem; display: block;" data-i18n="dashboardLanguage">Dashboard interface language</label>
+              <div style="display: flex; gap: 10px; max-width: 400px;">
+                <select id="settings-lang-select" class="lang-select">
+                  <option value="en">English</option>
+                  <option value="mr">मराठी (Marathi)</option>
+                  <option value="hi">हिन्दी (Hindi)</option>
+                </select>
+                <button id="save-language-btn" class="secondary-button" type="button" data-i18n="saveLanguageBtn">Save preference</button>
+              </div>
+              <p id="language-saved-msg" class="muted" style="color: #059669; margin-top: 0.5rem;"></p>
+            </div>
+          </article>
+          <article id="pending-officers-panel" class="panel hidden" style="margin-top:18px;">
+            <div class="panel-heading">
+              <h3>Officer registrations awaiting approval</h3>
+              <button id="refresh-pending-officers" class="secondary-button" type="button">Refresh requests</button>
+            </div>
+            <div id="pending-officers-list"></div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <aside id="detail-drawer" class="detail-drawer hidden">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow" data-i18n="caseDetail">Case detail</p>
+          <h2 id="detail-title">Complaint</h2>
+        </div>
+        <button id="close-drawer" class="icon-button" aria-label="Close details">×</button>
+      </div>
+
+      <div id="detail-body"></div>
+
+      <!-- Quick Officer Triage & Decision (Accept / Reject) -->
+      <div class="drawer-form" style="border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 1rem;">
+        <h3 data-i18n="complaintDecisionTitle">Complaint Decision & Triage</h3>
+        <p class="muted" style="margin-bottom: 0.5rem; font-size: 12px;" data-i18n="complaintDecisionHint">Accept to move complaint to In Progress, or Reject with a recorded reason.</p>
+        <div class="work-order-actions" style="margin-bottom: 0.5rem;">
+          <button id="btn-accept-complaint" class="btn-accept" type="button" data-i18n="acceptComplaintBtn">✓ Accept Complaint</button>
+          <button id="btn-show-reject" class="btn-reject" type="button" data-i18n="rejectComplaintBtn">✕ Reject Complaint</button>
+        </div>
+        <div id="reject-reason-box" class="hidden" style="margin-top: 0.5rem; background: #fff5f5; padding: 0.75rem; border-radius: 6px; border: 1px solid #fed7d7;">
+          <label>
+            <span style="color: #991b1b; font-weight: 600;" data-i18n="rejectionReasonLabel">Rejection Reason (Required) *</span>
+            <input id="quick-reject-reason" placeholder="Explain why this complaint is rejected (e.g. duplicate, out of boundary)..." data-i18n-placeholder="rejectionReasonPlaceholder">
+          </label>
+          <div style="display: flex; gap: 8px; margin-top: 6px;">
+            <button id="btn-confirm-reject" class="btn-reject" type="button" data-i18n="confirmRejectBtn">Confirm Rejection</button>
+            <button id="btn-cancel-reject" class="secondary-button" type="button" data-i18n="cancelBtn">Cancel</button>
+          </div>
+        </div>
+        <p id="decision-message" class="muted" style="margin-top: 6px; font-size: 12px;"></p>
+      </div>
+
+      <!-- Work Order Actions (SRS Module 4) -->
+      <div class="drawer-form" style="border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 1rem;">
+        <h3 data-i18n="workOrdersTitle">Work Order Dispatch & Tracking</h3>
+        <label>
+          <span data-i18n="workOrderReason">Action reason / Field remarks</span>
+          <input id="wo-reason" placeholder="Enter reason for accept, reject, or reassign..." data-i18n-placeholder="workOrderPlaceholder">
+        </label>
+        <div class="work-order-actions">
+          <button id="btn-wo-accept" class="btn-accept" type="button" data-i18n="acceptWorkOrder">Accept Work Order</button>
+          <button id="btn-wo-reject" class="btn-reject" type="button" data-i18n="rejectWorkOrder">Reject (Wrong Dept)</button>
+          <button id="btn-wo-reassign" class="btn-reassign" type="button" data-i18n="reassignWorkOrder">Reassign Work Order</button>
+        </div>
+        <p id="wo-message" class="muted" style="margin-top: 6px;"></p>
+      </div>
+
+      <!-- Officer AI Override Form (SRS Module 2) -->
+      <form id="ai-override-form" class="drawer-form" style="border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 1rem;">
+        <h3 data-i18n="aiOverrideTitle">Officer AI Correction & Override</h3>
+        <label>
+          <span data-i18n="correctCategory">Correct Category</span>
+          <select id="override-category">
+            <option value="">No change</option>
+            <option value="Water">Water Supply</option>
+            <option value="Roads">Roads & Pathways</option>
+            <option value="Electricity">Electricity</option>
+            <option value="Medical">Healthcare & Dispensary</option>
+            <option value="Sanitation">Sanitation & Waste</option>
+            <option value="Agriculture">Agriculture & Irrigation</option>
+            <option value="Education">Education & Schools</option>
+            <option value="Drainage">Drainage & Gutters</option>
+            <option value="Street Light">Street Lights</option>
+            <option value="Internet">Internet & Network</option>
+            <option value="Government Documents">Government Documents</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="correctSeverity">Correct Severity</span>
+          <select id="override-severity">
+            <option value="">No change</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="overrideReasonLabel">Reason for overriding AI prediction</span>
+          <input id="override-reason" placeholder="e.g. Ground inspection verified this is a water pipeline burst..." data-i18n-placeholder="overrideReasonPlaceholder" required>
+        </label>
+        <button class="secondary-button" type="submit" data-i18n="aiOverrideBtn">Save AI Correction</button>
+        <p id="override-message" class="muted" style="margin-top: 6px;"></p>
+      </form>
+
+      <form id="assignment-form" class="drawer-form">
+        <h3 data-i18n="departmentAssignments">Department assignment</h3>
+        <label>
+          <span data-i18n="thDepartment">Department</span>
+          <input id="assigned-department" required>
+        </label>
+        <label>
+          <span data-i18n="assignedOfficerLabel">Assigned officer</span>
+          <select id="assigned-officer-id"><option value="" data-i18n="unassigned">Unassigned</option></select>
+        </label>
+        <label>
+          <span data-i18n="expectedResolutionLabel">Expected resolution date</span>
+          <input id="expected-date" type="date">
+        </label>
+        <button class="primary-button" type="submit" aria-label="Save department assignment" data-i18n="saveAssignment">Save assignment</button>
+      </form>
+
+      <form id="status-form" class="drawer-form">
+        <h3 data-i18n="updateCase">Action tracking</h3>
+        <label>
+          <span data-i18n="thStatus">Status</span>
+          <select id="detail-status">
+            <option value="Pending">Pending</option>
+            <option value="Assigned">Assigned</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Closed">Closed</option>
+            <option value="Reopened">Reopened</option>
+            <option value="Escalated">Escalated</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="actionNotesLabel">Action notes</span>
+          <textarea id="action-notes" rows="3"></textarea>
+        </label>
+        <label>
+          <span data-i18n="repairEvidenceLabel">Repair evidence URL</span>
+          <input id="repair-evidence">
+        </label>
+        <label>
+          <span data-i18n="completionDateLabel">Completion date</span>
+          <input id="completion-date" type="datetime-local">
+        </label>
+        <button class="primary-button" type="submit" aria-label="Update complaint status" data-i18n="updateCase">Update case</button>
+      </form>
+
+      <p id="drawer-message" class="muted"></p>
+    </aside>
+  </main>
+
+  <div id="evidence-lightbox-modal" class="lightbox-modal hidden" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" aria-hidden="true">
+    <div id="lightbox-backdrop" class="lightbox-backdrop"></div>
+    <section class="lightbox-content">
+      <button id="lightbox-close-btn" class="lightbox-close" type="button" aria-label="Close evidence viewer">×</button>
+      <div class="lightbox-media-wrap">
+        <img id="lightbox-img" class="lightbox-image" alt="Full-size complaint evidence">
+      </div>
+      <footer class="lightbox-footer">
+        <div class="lightbox-meta">
+          <strong id="lightbox-title">Evidence Photo</strong>
+          <span id="lightbox-details" class="muted"></span>
+        </div>
+        <div class="lightbox-actions">
+          <a id="lightbox-download-link" class="primary-button" data-i18n="downloadEvidence" download>Download</a>
+          <a id="lightbox-external-link" class="secondary-button" data-i18n="openInNewTab" target="_blank" rel="noopener noreferrer">Open in New Tab</a>
+        </div>
+      </footer>
+    </section>
+  </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="i18n.js?v=24"></script>
+<script src="app.js?v=25"></script>
+</body>
+</html>

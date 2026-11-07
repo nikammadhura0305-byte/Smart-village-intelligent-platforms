@@ -1,0 +1,1 @@
+Alembic migration scripts live in this directory. Generate the first migration after configuring PostgreSQL with: alembic revision --autogenerate -m "initial foundation".

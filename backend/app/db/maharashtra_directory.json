@@ -1,0 +1,255 @@
+{
+  "state": "Maharashtra",
+  "districts": [
+    {
+      "name": "Pune",
+      "talukas": [
+        {
+          "name": "Haveli",
+          "villages": [
+            {"name": "Wagholi", "latitude": 18.5793, "longitude": 73.9822, "boundary_radius_km": 4.5},
+            {"name": "Uruli Kanchan", "latitude": 18.4870, "longitude": 74.1332, "boundary_radius_km": 4.0},
+            {"name": "Loni Kalbhor", "latitude": 18.4891, "longitude": 74.0203, "boundary_radius_km": 3.5},
+            {"name": "Manjari Khurd", "latitude": 18.5284, "longitude": 73.9782, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Baramati",
+          "villages": [
+            {"name": "Malegaon Budruk", "latitude": 18.1500, "longitude": 74.5500, "boundary_radius_km": 4.0},
+            {"name": "Karhati", "latitude": 18.1833, "longitude": 74.4500, "boundary_radius_km": 3.5},
+            {"name": "Songaon", "latitude": 18.0833, "longitude": 74.6000, "boundary_radius_km": 3.0},
+            {"name": "Rui", "latitude": 18.1667, "longitude": 74.5667, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Maval",
+          "villages": [
+            {"name": "Kamshet", "latitude": 18.7564, "longitude": 73.5592, "boundary_radius_km": 3.5},
+            {"name": "Wadgaon", "latitude": 18.7450, "longitude": 73.6450, "boundary_radius_km": 3.0},
+            {"name": "Talegaon Dabhade (Rural)", "latitude": 18.7300, "longitude": 73.6800, "boundary_radius_km": 4.0},
+            {"name": "Kanhe", "latitude": 18.7620, "longitude": 73.5930, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Shirur",
+          "villages": [
+            {"name": "Shikrapur", "latitude": 18.7230, "longitude": 74.1250, "boundary_radius_km": 4.0},
+            {"name": "Sanaswadi", "latitude": 18.6670, "longitude": 74.0830, "boundary_radius_km": 3.5},
+            {"name": "Pabal", "latitude": 18.8333, "longitude": 74.0500, "boundary_radius_km": 4.0},
+            {"name": "Mandavgan Pharata", "latitude": 18.6000, "longitude": 74.4667, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Khed",
+          "villages": [
+            {"name": "Chakan (Rural)", "latitude": 18.7600, "longitude": 73.8500, "boundary_radius_km": 4.5},
+            {"name": "Alandi (Rural)", "latitude": 18.6780, "longitude": 73.8970, "boundary_radius_km": 3.5},
+            {"name": "Khed Shivapur", "latitude": 18.3500, "longitude": 73.8500, "boundary_radius_km": 3.5},
+            {"name": "Shelgaon", "latitude": 18.8500, "longitude": 73.9167, "boundary_radius_km": 3.0}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kolhapur",
+      "talukas": [
+        {
+          "name": "Karvir",
+          "villages": [
+            {"name": "Shiroli", "latitude": 16.7380, "longitude": 74.2790, "boundary_radius_km": 3.5},
+            {"name": "Ujlaiwadi", "latitude": 16.6667, "longitude": 74.2667, "boundary_radius_km": 3.0},
+            {"name": "Kalamba", "latitude": 16.6667, "longitude": 74.2167, "boundary_radius_km": 3.5},
+            {"name": "Pachgaon", "latitude": 16.6750, "longitude": 74.2333, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Hatkanangale",
+          "villages": [
+            {"name": "Hupari", "latitude": 16.6236, "longitude": 74.4036, "boundary_radius_km": 4.0},
+            {"name": "Pattankodoli", "latitude": 16.6600, "longitude": 74.3400, "boundary_radius_km": 3.5},
+            {"name": "Rukadi", "latitude": 16.7000, "longitude": 74.3333, "boundary_radius_km": 3.5},
+            {"name": "Herle", "latitude": 16.7500, "longitude": 74.3167, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Panhala",
+          "villages": [
+            {"name": "Kodoli", "latitude": 16.8790, "longitude": 74.1950, "boundary_radius_km": 4.0},
+            {"name": "Kotoli", "latitude": 16.8167, "longitude": 74.1167, "boundary_radius_km": 3.5},
+            {"name": "Pohale", "latitude": 16.8333, "longitude": 74.1500, "boundary_radius_km": 3.0},
+            {"name": "Borpadale", "latitude": 16.8500, "longitude": 74.1000, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Shirol",
+          "villages": [
+            {"name": "Danoli", "latitude": 16.8000, "longitude": 74.5500, "boundary_radius_km": 3.5},
+            {"name": "Shedbal", "latitude": 16.7167, "longitude": 74.6500, "boundary_radius_km": 3.5},
+            {"name": "Kurundwad (Rural)", "latitude": 16.6833, "longitude": 74.6000, "boundary_radius_km": 3.5},
+            {"name": "Dharangutti", "latitude": 16.7333, "longitude": 74.5667, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Radhanagari",
+          "villages": [
+            {"name": "Radhanagari", "latitude": 16.4167, "longitude": 73.9833, "boundary_radius_km": 4.0},
+            {"name": "Tarale", "latitude": 16.4500, "longitude": 74.0167, "boundary_radius_km": 3.0},
+            {"name": "Rashivade", "latitude": 16.5000, "longitude": 74.0500, "boundary_radius_km": 3.5},
+            {"name": "Kaulav", "latitude": 16.5333, "longitude": 74.1000, "boundary_radius_km": 3.0}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Satara",
+      "talukas": [
+        {
+          "name": "Satara",
+          "villages": [
+            {"name": "Limb", "latitude": 17.7420, "longitude": 74.0150, "boundary_radius_km": 3.5},
+            {"name": "Kshetra Mahuli", "latitude": 17.6833, "longitude": 74.0500, "boundary_radius_km": 3.0},
+            {"name": "Padali", "latitude": 17.7167, "longitude": 73.9833, "boundary_radius_km": 3.0},
+            {"name": "Varye", "latitude": 17.6667, "longitude": 74.0333, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Karad",
+          "villages": [
+            {"name": "Ogalewadi", "latitude": 17.2833, "longitude": 74.2000, "boundary_radius_km": 3.5},
+            {"name": "Umbraj", "latitude": 17.4000, "longitude": 74.1500, "boundary_radius_km": 4.0},
+            {"name": "Kole", "latitude": 17.3167, "longitude": 74.1500, "boundary_radius_km": 3.0},
+            {"name": "Malkapur (Rural)", "latitude": 17.2667, "longitude": 74.1833, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Wai",
+          "villages": [
+            {"name": "Bhuinj", "latitude": 17.9167, "longitude": 74.0000, "boundary_radius_km": 3.5},
+            {"name": "Menavali", "latitude": 17.9500, "longitude": 73.8833, "boundary_radius_km": 3.0},
+            {"name": "Pasarni", "latitude": 17.9333, "longitude": 73.8500, "boundary_radius_km": 3.0},
+            {"name": "Dhom", "latitude": 17.9667, "longitude": 73.8333, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Koregaon",
+          "villages": [
+            {"name": "Rahimatpur (Rural)", "latitude": 17.6000, "longitude": 74.2000, "boundary_radius_km": 3.5},
+            {"name": "Wathar", "latitude": 17.8167, "longitude": 74.1333, "boundary_radius_km": 3.5},
+            {"name": "Kinhai", "latitude": 17.7667, "longitude": 74.1167, "boundary_radius_km": 3.0},
+            {"name": "Kumthe", "latitude": 17.7000, "longitude": 74.1667, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Phaltan",
+          "villages": [
+            {"name": "Taradgaon", "latitude": 18.0500, "longitude": 74.3167, "boundary_radius_km": 3.5},
+            {"name": "Sakharwadi", "latitude": 17.9833, "longitude": 74.3833, "boundary_radius_km": 3.5},
+            {"name": "Barad", "latitude": 17.9667, "longitude": 74.5500, "boundary_radius_km": 3.5},
+            {"name": "Lonand (Rural)", "latitude": 18.0500, "longitude": 74.1833, "boundary_radius_km": 4.0}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sangli",
+      "talukas": [
+        {
+          "name": "Miraj",
+          "villages": [
+            {"name": "Kupwad (Rural)", "latitude": 16.8833, "longitude": 74.6167, "boundary_radius_km": 4.0},
+            {"name": "Bedag", "latitude": 16.7833, "longitude": 74.7500, "boundary_radius_km": 3.5},
+            {"name": "Malgaon", "latitude": 16.8500, "longitude": 74.6833, "boundary_radius_km": 3.5},
+            {"name": "Arag", "latitude": 16.7667, "longitude": 74.8167, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Walwa",
+          "villages": [
+            {"name": "Uran Islampur (Rural)", "latitude": 17.0500, "longitude": 74.2667, "boundary_radius_km": 4.0},
+            {"name": "Peth", "latitude": 17.0333, "longitude": 74.2167, "boundary_radius_km": 3.5},
+            {"name": "Ashta (Rural)", "latitude": 16.9500, "longitude": 74.4000, "boundary_radius_km": 4.0},
+            {"name": "Bahe", "latitude": 17.1000, "longitude": 74.2833, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Tasgaon",
+          "villages": [
+            {"name": "Savlaj", "latitude": 17.0833, "longitude": 74.7833, "boundary_radius_km": 4.0},
+            {"name": "Manraj", "latitude": 17.0167, "longitude": 74.6000, "boundary_radius_km": 3.0},
+            {"name": "Visapur", "latitude": 17.0500, "longitude": 74.5500, "boundary_radius_km": 3.5},
+            {"name": "Bastawade", "latitude": 17.0000, "longitude": 74.6333, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Khanapur",
+          "villages": [
+            {"name": "Bhalwani", "latitude": 17.2667, "longitude": 74.5833, "boundary_radius_km": 3.5},
+            {"name": "Lengre", "latitude": 17.3167, "longitude": 74.6667, "boundary_radius_km": 3.5},
+            {"name": "Palsi", "latitude": 17.2167, "longitude": 74.5167, "boundary_radius_km": 3.0},
+            {"name": "Pare", "latitude": 17.2833, "longitude": 74.6167, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Shirala",
+          "villages": [
+            {"name": "Shirala (Rural)", "latitude": 16.9833, "longitude": 74.1333, "boundary_radius_km": 3.5},
+            {"name": "Kokrud", "latitude": 17.0667, "longitude": 73.9667, "boundary_radius_km": 3.5},
+            {"name": "Charan", "latitude": 17.0333, "longitude": 73.9167, "boundary_radius_km": 3.0},
+            {"name": "Mangle", "latitude": 16.9500, "longitude": 74.1833, "boundary_radius_km": 3.0}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nashik",
+      "talukas": [
+        {
+          "name": "Nashik",
+          "villages": [
+            {"name": "Deolali (Rural)", "latitude": 19.9333, "longitude": 73.8333, "boundary_radius_km": 4.0},
+            {"name": "Bhagur (Rural)", "latitude": 19.9167, "longitude": 73.8167, "boundary_radius_km": 3.5},
+            {"name": "Gangapur", "latitude": 20.0333, "longitude": 73.7333, "boundary_radius_km": 3.5},
+            {"name": "Makhmalabad", "latitude": 20.0500, "longitude": 73.7833, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Niphad",
+          "villages": [
+            {"name": "Pimpalgaon Baswant", "latitude": 20.1700, "longitude": 73.9800, "boundary_radius_km": 4.5},
+            {"name": "Ozar", "latitude": 20.0950, "longitude": 73.9450, "boundary_radius_km": 4.0},
+            {"name": "Lasalgaon", "latitude": 20.1450, "longitude": 74.2300, "boundary_radius_km": 4.0},
+            {"name": "Ranwad", "latitude": 20.1167, "longitude": 74.0500, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Sinnar",
+          "villages": [
+            {"name": "Musalgaon", "latitude": 19.8667, "longitude": 74.0167, "boundary_radius_km": 4.0},
+            {"name": "Wavi", "latitude": 19.8167, "longitude": 74.1833, "boundary_radius_km": 3.5},
+            {"name": "Pandhurli", "latitude": 19.7833, "longitude": 73.9167, "boundary_radius_km": 3.5},
+            {"name": "Dapur", "latitude": 19.8333, "longitude": 74.0833, "boundary_radius_km": 3.0}
+          ]
+        },
+        {
+          "name": "Dindori",
+          "villages": [
+            {"name": "Dindori (Rural)", "latitude": 20.2000, "longitude": 73.8333, "boundary_radius_km": 4.0},
+            {"name": "Vani", "latitude": 20.3167, "longitude": 73.9000, "boundary_radius_km": 4.0},
+            {"name": "Janori", "latitude": 20.1333, "longitude": 73.8667, "boundary_radius_km": 3.5},
+            {"name": "Khedgaon", "latitude": 20.2500, "longitude": 73.9500, "boundary_radius_km": 3.5}
+          ]
+        },
+        {
+          "name": "Igatpuri",
+          "villages": [
+            {"name": "Ghoti", "latitude": 19.7167, "longitude": 73.6667, "boundary_radius_km": 4.0},
+            {"name": "Wadivarhe", "latitude": 19.8500, "longitude": 73.7000, "boundary_radius_km": 3.5},
+            {"name": "Vaitarna", "latitude": 19.7833, "longitude": 73.5500, "boundary_radius_km": 4.0},
+            {"name": "Taked", "latitude": 19.6833, "longitude": 73.7500, "boundary_radius_km": 3.5}
+          ]
+        }
+      ]
+    }
+  ]
+}
